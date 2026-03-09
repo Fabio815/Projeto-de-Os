@@ -29,7 +29,7 @@ public class ClienteController {
             ClienteDAO.adicionarCliente(cliente, connection);
             return Response.ok().entity("{\"sucesso\": true, \"mensagem\": \"Cliente salvo\"}").build();
         } catch (Exception ex) {
-            //LOGGER.error("Erro ao cadastrar usuario ", ex);
+            //LOGGER.error("Erro ao cadastrar usuario ", ex) ex;
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"Falha\": false, \"mensagem\": \"Erro ao cadastrar usuário.\"}").build();
         } finally {
             try {
