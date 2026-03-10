@@ -7,6 +7,7 @@ import br.com.model.Filtro;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -14,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,11 +62,10 @@ public class ClienteController {
         Connection connection = null;
         List<Cliente> clientes;
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            List<Filtro> filtro = objectMapper.readValue(jsonData, new TypeReference<List<Filtro>>(){});
-            HashMap<String, Object> resposta = new HashMap<>();
-            resposta = new HashMap<>();
             connection = DataBaseConfig.connection();
+            List<Filtro> filtro = new ArrayList<>();
+            Map<String, Object> resposta;
+            resposta = new HashMap<>();
             clientes = ClienteDAO.listarClientes(connection, filtro);
             resposta.put("clientes", clientes);
             return Response.ok().entity(resposta).build();

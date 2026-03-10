@@ -20,20 +20,19 @@ Ext.define('ProjSistemaOs.store.Cliente', {
     listeners: {
         beforeLoad: function(store, operation) {
             var filtros = store.getFilters().items, arrayFiltro = [];
-            console.log(filtros);
             for (var f of filtros) {
                 if (f.getProperty() == "statusCliente") {
                     f.setValue(f.getValue() ? 1 : 0);
                 }
             }
-
+            console.log(store);
             arrayFiltro = filtros.map(f => ({
                 propriedade: f.getProperty(),
                 operador: f._operator,
                 valor: f._value
             }));
             store.getProxy().setExtraParams({
-                filtros: Ext.encode(arrayFiltro)
+                filtros: arrayFiltro
             });
         }
     }
