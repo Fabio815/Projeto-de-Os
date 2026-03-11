@@ -7,32 +7,34 @@ Ext.define('ProjSistemaOs.store.Cliente', {
     autoLoad: true,
 
     proxy: {
-        type: 'rest',
+        type: 'ajax',
         url: 'http://localhost:8080/api/cliente/listar',
-        actionMethods: {
-            read: 'GET'
-        },
         reader: {
             type: 'json',
             rootProperty: 'clientes'
         }
     },
     listeners: {
-        beforeLoad: function(store, operation) {
-            var filtros = store.getFilters().items, arrayFiltro = [];
+        beforeload: function(store, operation) {
+
+            var filtros = store.getFilters().items;
+            var arrayFiltro = [];
+
             for (var f of filtros) {
-                if (f.getProperty() == "statusCliente") {
-                    f.setValue(f.getValue() ? 1 : 0);
+                var valor = f.getValue();
+                if (f.getProperty() === "statusCliente") {
+                    valor = valor ? 1 : 0;
                 }
+
+                arrayFiltro.push({
+                    propriedade: f.getProperty(),
+                    operador: f.getOperator(),
+                    valor: valor
+                });
             }
-            console.log(store);
-            arrayFiltro = filtros.map(f => ({
-                propriedade: f.getProperty(),
-                operador: f._operator,
-                valor: f._value
-            }));
+
             store.getProxy().setExtraParams({
-                filtros: arrayFiltro
+                filtros: Ext.encode(arrayFiltro)
             });
         }
     }

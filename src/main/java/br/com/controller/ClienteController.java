@@ -58,17 +58,20 @@ public class ClienteController {
     @GET
     @Path("/listar")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarCliente(@QueryParam("filtros") String jsonData) {
+    public Response listarCliente(@QueryParam("filtros") String dadosJson) {
         Connection connection = null;
-        List<Cliente> clientes;
+        List<Cliente> clientes = new ArrayList<>();
         try {
             connection = DataBaseConfig.connection();
+            HashMap<String, Object> reposta = new HashMap<>();
             List<Filtro> filtro = new ArrayList<>();
-            Map<String, Object> resposta;
-            resposta = new HashMap<>();
+            if (dadosJson != null && !dadosJson.isEmpty()) {
+                ObjectMapper mapper = new ObjectMapper();
+                filtro = mapper.readValue(dadosJson, new TypeReference<List<Filtro>>() {});
+            }
             clientes = ClienteDAO.listarClientes(connection, filtro);
-            resposta.put("clientes", clientes);
-            return Response.ok().entity(resposta).build();
+            reposta.put("clientes", clientes);
+            return Response.ok().entity(reposta).build();
         } catch (Exception ex) {
             LOGGER.error("Erro ao listar usuarios ", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"sucesso\": false, \"mensagem\": \"Erro ao listar usuarios.\"}").build();

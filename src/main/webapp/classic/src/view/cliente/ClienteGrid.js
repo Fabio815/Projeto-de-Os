@@ -61,9 +61,26 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
         xtype: 'checkcolumn',
         text: 'Ativo',
         dataIndex: 'statusCliente',
-        width: 80
+        width: 80,
+        filter: {
+            type: 'boolean',
+            yes: 'true',
+            no: 'false',
+            default: true
+        }
     }],
     plugins: {
         gridfilters: true
+    },
+    bbar: {
+        xtype: 'pagingtoolbar',
+        pageSize: 10,
+        displayInfo: true,
+        store: {
+            type: 'cliente-listagem-store'
+        },
+        displayMsg: 'Mostrando {0} - {1} de {2}',
+        emptyMsg: 'Sem dados'
     }
 });
+            
