@@ -2,7 +2,10 @@ Ext.define('ProjSistemaOs.view.cliente.ClienteWindow', {
     extend: 'Ext.window.Window',
     alias: 'widget.cadastro-cliente',
 	controller: 'cliente-controller',
-	
+	requires: [
+		'ProjSistemaOs.view.cliente.ClienteController'
+	],
+
     title: 'Cadastro Cliente',
     layout: 'fit',
     resizable: false,

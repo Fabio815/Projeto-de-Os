@@ -15,7 +15,8 @@ Ext.define('ProjSistemaOs.view.main.Main', {
 
         'ProjSistemaOs.view.main.MainController',
         'ProjSistemaOs.view.main.MainModel',
-		'ProjSistemaOs.view.cliente.ClientesGrid'
+		'ProjSistemaOs.view.cliente.ClientesGrid',
+        'ProjSistemaOs.view.estoque.EstoqueGrid'
     ],
 
     controller: 'main',
@@ -101,6 +102,9 @@ Ext.define('ProjSistemaOs.view.main.Main', {
     }, {
         title: 'Estoque',
         iconCls: 'fa-box',
+        items: [{
+            xtype: 'estoqueGrid'
+        }]
     },	{
         title: 'Usuários',
         iconCls: 'fa-cog',

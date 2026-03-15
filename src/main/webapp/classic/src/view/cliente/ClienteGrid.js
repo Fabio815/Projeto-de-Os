@@ -2,7 +2,18 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
     extend: 'Ext.grid.Panel',
     xtype: 'clienteGrid',
 
-	controller: {
+    requires: [
+        'Ext.grid.column.Check',
+        'Ext.grid.plugin.CellEditing',
+        'Ext.grid.filters.Filters',
+        'Ext.toolbar.Paging',
+
+        'ProjSistemaOs.store.Cliente',
+        'ProjSistemaOs.view.cliente.ClienteWindow',
+        'ProjSistemaOs.util.MensagemUtil'
+    ],
+
+    controller: {
         adicionarCliente: function(){
             var me = this, vw = me.getViewModel(),
                 win = Ext.create('ProjSistemaOs.view.cliente.ClienteWindow');
@@ -36,21 +47,21 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
                         var r = Ext.decode(response.responseText, true);
                         if (r && r.sucesso) {
                             record.commit();
-                            //Avisos.mensagemSucesso(r.mensagem);
+                            Avisos.mensagemSucesso(r.mensagem);
                         } else if (r) {
                             record.reject();
-                            //Avisos.mensagemAviso(r.mensagem);
+                            Avisos.mensagemAviso(r.mensagem);
                         } else {
-                            //Avisos.mostrarServidorIndisponivel();
+                            Avisos.mostrarServidorIndisponivel();
                         }
                     },
                     failure: function(response) {
                         var r = Ext.decode(response.responseText, true);
                         record.reject();
                         if (r && r.mensagem) {
-                           // Avisos.mensagemAviso(r.mensagem);
+                           Avisos.mensagemAviso(r.mensagem);
                         } else {
-                           // Avisos.mostrarServidorIndisponivel();
+                           Avisos.mostrarServidorIndisponivel();
                         }
                     }
                 })
