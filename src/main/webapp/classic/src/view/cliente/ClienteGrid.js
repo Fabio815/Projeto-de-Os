@@ -76,11 +76,10 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
         xtype: 'pagingtoolbar',
         pageSize: 10,
         displayInfo: true,
+        displayMsg: 'Página {0} - {1} de {2}',
+        emptyMsg: 'Sem dados',
         store: {
-            type: 'cliente-listagem-store'
-        },
-        displayMsg: 'Mostrando {0} - {1} de {2}',
-        emptyMsg: 'Sem dados'
+            bind: 'cliente-listagem-store'
+        }
     }
 });
-            

@@ -1,13 +1,12 @@
 package br.com.controller;
 
+
 import br.com.config.DataBaseConfig;
 import br.com.dao.ClienteDAO;
 import br.com.model.Cliente;
 import br.com.model.Filtro;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -18,7 +17,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Path("/cliente")
 public class ClienteController {

@@ -19,7 +19,7 @@ Ext.define('ProjSistemaOs.view.cliente.ClienteController', {
 		form = vw.down('form').getForm().getValues();
 		
 		Ext.Ajax.request({
-			url: 'http://localhost:8080/api/cliente/cadastrar',
+			url: 'http://localhost:8080/sistema-os/api/cliente/cadastrar',
 			method: 'POST',
 			jsonData: form,
 			callback: function(options, success, response) {
