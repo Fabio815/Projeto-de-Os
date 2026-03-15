@@ -65,6 +65,7 @@ Ext.define('ProjSistemaOs.view.cliente.ClienteWindow', {
 	                flex: 2,
 	                emptyText: 'First',
 	            }, {
+					xtype: 'numberfield',
 	                fieldLabel: 'Número',
 	                name: 'numero',
 	                flex: 1,

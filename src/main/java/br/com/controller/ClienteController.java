@@ -37,7 +37,7 @@ public class ClienteController {
         }
         try {
             connection = DataBaseConfig.connection();
-            ClienteDAO.adicionarCliente(cliente, connection);
+            ClienteDAO.adicionar(cliente, connection);
             return Response.ok().entity("{\"sucesso\": true, \"mensagem\": \"Cliente salvo\"}").build();
         } catch (Exception ex) {
             LOGGER.error("Erro ao cadastrar usuario ", ex);
@@ -67,7 +67,7 @@ public class ClienteController {
                 ObjectMapper mapper = new ObjectMapper();
                 filtro = mapper.readValue(dadosJson, new TypeReference<List<Filtro>>() {});
             }
-            clientes = ClienteDAO.listarClientes(connection, filtro);
+            clientes = ClienteDAO.listar(connection, filtro);
             reposta.put("clientes", clientes);
             return Response.ok().entity(reposta).build();
         } catch (Exception ex) {
@@ -79,6 +79,30 @@ public class ClienteController {
                     connection.close();
                 }
             } catch (Exception ex) {
+                LOGGER.error("falha ao fechar connection ", ex);
+            }
+        }
+    }
+
+    @POST
+    @Path("/atualizar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizarCliente(Cliente cliente) {
+        Connection connection = null;
+        try {
+            connection = DataBaseConfig.connection();
+            ClienteDAO.atualizar(cliente, connection);
+            return Response.ok().entity("{\"sucesso\": true, \"mensagem\": \"Cliente atualizado.\"}").build();
+        } catch (Exception ex) {
+            LOGGER.error("Erro ao atualizar usuario ", ex);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("{\"sucesso\": false, \"mensagem\": \"Erro ao atualizar usuario.\"}").build();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            }  catch (Exception ex) {
                 LOGGER.error("falha ao fechar connection ", ex);
             }
         }

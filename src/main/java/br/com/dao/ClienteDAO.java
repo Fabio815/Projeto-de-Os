@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDAO {
-    public static void adicionarCliente(Cliente cliente, Connection connection) throws Exception {
+
+    public static void adicionar(Cliente cliente, Connection connection) throws Exception {
         if (cliente != null && connection != null) {
             PreparedStatement stmtEndereco = null;
             PreparedStatement stmtCliente = null;
@@ -51,7 +52,7 @@ public class ClienteDAO {
         }
     }
 
-    public static List<Cliente> listarClientes(Connection connection, List<Filtro> filtro) throws Exception {
+    public static List<Cliente> listar(Connection connection, List<Filtro> filtro) throws Exception {
         if (connection == null) return null;
 
         List <Cliente> lista = null;
@@ -121,5 +122,25 @@ public class ClienteDAO {
             stmt.close();
         }
         return lista;
+    }
+
+    public static void atualizar(Cliente cliente, Connection connection) throws Exception {
+        if (cliente != null && connection != null) {
+            try (PreparedStatement stmt = connection.prepareStatement("update bf_cliente set nome=?, telefone=?, statusCliente=? where id=?");
+                 PreparedStatement stmt2 = connection.prepareStatement("update bf_endereco set rua=?, bairro=?, numero=?, complemento=? where id_cliente=?");) {
+                stmt.setString(1, cliente.getNome());
+                stmt.setString(2, cliente.getTelefone());
+                stmt.setByte(3, cliente.getStatusCliente());
+                stmt.setLong(4, cliente.getId());
+                stmt.executeUpdate();
+
+                stmt2.setString(1, cliente.getRua());
+                stmt2.setString(2, cliente.getBairro());
+                stmt2.setString(3, cliente.getNumero());
+                stmt2.setString(4, cliente.getComplemento());
+                stmt2.setLong(5, cliente.getId());
+                stmt2.executeUpdate();
+            }
+        }
     }
 }
