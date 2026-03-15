@@ -1,7 +1,27 @@
 Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
     extend: 'Ext.grid.Panel',
     xtype: 'clienteGrid',
-	controller: 'cliente-controller',
+
+	controller: {
+        adicionarCliente: function(){
+            var me = this, vw = me.getViewModel(),
+                win = Ext.create('ProjSistemaOs.view.cliente.ClienteWindow');
+
+            win.on('clienteSalvo', () => { //Aqui está escutando o envento que é disparadp quando salva o cliente.
+                if (vw && !vw.destroyed && !vw.isDestroying) {
+                    me.getView().getStore().load();
+                }
+            });
+            win.show();
+        },
+        recarregarGrid: function () {
+            var me = this, vw = me.getView();
+            if (vw && !vw.destroyed && !vw.isDestroying) {
+                me.getView().getStore().load();
+            }
+        }
+    },
+
     enableColumnHide: false,
     requires: [
         'ProjSistemaOs.store.Cliente',
@@ -23,7 +43,14 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
 		width: 40,
 		height: 40,
 		handler: 'adicionarCliente'
-	}],
+	}, {
+        xtype: 'button',
+        tooltip: 'Adicionar',
+        iconCls: 'fa fa-sync',
+        width: 40,
+        height: 40,
+        handler: 'recarregarGrid'
+    }],
     columns: [{
         text: 'Id',
         dataIndex: 'id',
@@ -79,7 +106,7 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
         displayMsg: 'Página {0} - {1} de {2}',
         emptyMsg: 'Sem dados',
         store: {
-            bind: 'cliente-listagem-store'
+            type: 'cliente-listagem-store'
         }
     }
 });

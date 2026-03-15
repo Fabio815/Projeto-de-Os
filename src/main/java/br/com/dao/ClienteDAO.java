@@ -81,7 +81,7 @@ public class ClienteDAO {
         buff.append(" order by c.id");
         stmt = connection.prepareStatement(buff.toString());
         int i = 1;
-        if (!filtro.isEmpty()){
+        if (!filtro.isEmpty()) {
             for (Filtro f : filtro) {
                 switch (f.getOperador()) {
                     case "like":

@@ -1,13 +1,7 @@
 Ext.define('ProjSistemaOs.view.cliente.ClienteController', {
 	extend: 'Ext.app.ViewController',
     alias: 'controller.cliente-controller',
-	
-	adicionarCliente: function(){
-		//var me = this, vw = me.getViewModel();
-		var janelaAdicionarCliente = Ext.create('ProjSistemaOs.view.cliente.ClienteWindow');
-		
-		janelaAdicionarCliente.show();
-	},
+
 	fecharJanela: function() {
 		var me = this, vw = me.getView();
 		if (vw && !vw.destroyed && !vw.isDestroying) {
@@ -17,7 +11,6 @@ Ext.define('ProjSistemaOs.view.cliente.ClienteController', {
 	salvarCliente: function() {
 		var me = this, vw = me.getView(),
 		form = vw.down('form').getForm().getValues();
-		
 		Ext.Ajax.request({
 			url: 'http://localhost:8080/sistema-os/api/cliente/cadastrar',
 			method: 'POST',
@@ -26,9 +19,9 @@ Ext.define('ProjSistemaOs.view.cliente.ClienteController', {
 				if (vw && !vw.destroyed && !vw.isDestroying) {
 					var r = Ext.decode(response.responseText, true);
 					if (r && r.sucesso) {
-						vw.fireEvent('clientesalvo');
+						vw.fireEvent('clientesalvo'); //Dispara o evento quando salva o cliente.
 					 	//Avisos.mensagemSucesso(r.mensagem);
-						vw.destroy();
+						vw.close();
 					} else if (r) {
 						 //Avisos.mensagemAviso(r.mensagem);
 					} else {
