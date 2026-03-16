@@ -2,9 +2,12 @@ Ext.define('ProjSistemaOs.view.estoque.EstoqueGrid', {
     extend: 'Ext.grid.Panel',
     xtype: 'estoqueGrid',
     requires: [
-        'Ext.grid.column.Check'
+        'Ext.grid.column.Check',
+        'ProjSistemaOs.store.Cliente'
     ],
-
+    store: {
+        type: 'estoque-listagem-store'
+    },
     title: 'Cadastro Peças',
     layout: 'fit',
 
@@ -25,7 +28,7 @@ Ext.define('ProjSistemaOs.view.estoque.EstoqueGrid', {
         dataIndex: 'valor_unitario'
     }, {
         xtype: 'checkcolumn',
-        text: 'Status',
+        text: 'Ativo',
         width: 70
     }]
 });

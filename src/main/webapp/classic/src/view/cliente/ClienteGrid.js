@@ -70,11 +70,6 @@ Ext.define('ProjSistemaOs.view.cliente.ClientesGrid', {
     },
 
     enableColumnHide: false,
-    requires: [
-        'ProjSistemaOs.store.Cliente',
-		'ProjSistemaOs.view.cliente.ClienteController',
-		'ProjSistemaOs.view.cliente.ClienteWindow'
-    ],
 
     title: 'Clientes',
     layout: 'fit',
